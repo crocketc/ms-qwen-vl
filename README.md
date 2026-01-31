@@ -18,10 +18,10 @@
 pip install -r requirements.txt
 
 # 配置 API Key
-cp .env.example .env
+cp scripts/.env.example scripts/.env
 ```
 
-编辑 `.env` 文件，填入从 https://modelscope.cn/my/myaccesstoken 获取的 API Key：
+编辑 `scripts/.env` 文件，填入从 https://modelscope.cn/my/myaccesstoken 获取的 API Key：
 
 ```bash
 MODELSCOPE_API_KEY=your_api_key_here
@@ -105,9 +105,9 @@ ms-qwen-vl/
 ├── SKILL.md              # Claude Code Skill 定义
 ├── README.md             # 项目说明
 ├── requirements.txt      # Python 依赖
-├── .env.example          # 环境变量示例
 ├── .gitignore            # Git 忽略配置
 ├── scripts/
+│   ├── .env.example      # 环境变量示例
 │   └── ms_qwen_vl.py     # 核心解析脚本
 └── references/
     ├── api-guide.md      # OpenAI SDK 兼容调用说明
