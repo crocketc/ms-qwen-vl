@@ -30,6 +30,62 @@ cp .env.example .env
 MODELSCOPE_API_KEY=your_api_key_here
 ```
 
+## Claude Code 使用方式
+
+### 重要：处理本地图片
+
+当用户提供本地图片路径时（如桌面截图），**必须使用 Python 脚本处理**：
+
+```bash
+python scripts/ms_qwen_vl.py "<图片路径>" --task <任务类型>
+```
+
+脚本会自动将本地文件转换为 ModelScope API 需要的 base64 格式。
+
+### 处理 URL 图片
+
+当用户提供网络 URL 时，同样使用上述命令，脚本会自动识别：
+
+```bash
+python scripts/ms_qwen_vl.py "<URL>" --task <任务类型>
+```
+
+### Claude Code 对话示例
+
+**场景 1：分析桌面截图**
+```
+用户: 请帮我描述这张图片 C:\Users\...\Desktop\screenshot.png
+助手: [执行] python scripts/ms_qwen_vl.py "C:\Users\...\Desktop\screenshot.png"
+```
+
+**场景 2：OCR 识别本地图片**
+```
+用户: 识别这张图中的文字: D:\Documents\invoice.jpg
+助手: [执行] python scripts/ms_qwen_vl.py "D:\Documents\invoice.jpg" --task ocr
+```
+
+**场景 3：分析网络图片**
+```
+用户: 分析这张图片 https://example.com/photo.jpg
+助手: [执行] python scripts/ms_qwen_vl.py "https://example.com/photo.jpg" --task describe
+```
+
+**场景 4：视觉问答**
+```
+用户: 这张图里有几个人？C:\Users\...\Desktop\photo.png
+助手: [执行] python scripts/ms_qwen_vl.py "C:\Users\...\Desktop\photo.png" --task ask --question "图片里有几个人？"
+```
+
+### 任务类型对照
+
+| 用户需求 | --task 参数 |
+|---------|-------------|
+| 描述图片内容 | describe |
+| 识别文字/OCR | ocr |
+| 回答关于图片的问题 | ask（需要 --question） |
+| 检测物体 | detect |
+| 解析图表 | chart |
+
 ## 快速使用
 
 ```bash
