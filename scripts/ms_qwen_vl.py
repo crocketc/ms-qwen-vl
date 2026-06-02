@@ -45,6 +45,7 @@ def encode_image_to_base64(image_path: str) -> str:
     Returns:
         data URI 格式的字符串 (data:image/{type};base64,{data})
     """
+    MAX_DIM = 2048  # API limit
     with Image.open(image_path) as img:
         # 获取图片格式
         fmt = img.format or "png"
@@ -53,6 +54,10 @@ def encode_image_to_base64(image_path: str) -> str:
         # 转换为 RGB (处理 RGBA 等)
         if img.mode not in ("RGB", "L"):
             img = img.convert("RGB")
+
+        # 自动缩放至 API 限制内（2048x2048）
+        if img.width > MAX_DIM or img.height > MAX_DIM:
+            img.thumbnail((MAX_DIM, MAX_DIM), Image.LANCZOS)
 
         # 编码为 base64
         import io
